@@ -9,8 +9,8 @@ interface Item {
 
 export const TodoList: React.FC = () => {
   const [todos, setTodos] = useState<Item[]>([
-    { id: 1, text: "Learn Typescript with Cyn", completed: false },
-    { id: 2, text: "Build Todo List App", completed: false },
+    { id: 1, text: "Stay Focused & Disciplined", completed: false },
+    { id: 2, text: "Cynthia Loves You", completed: false },
   ]);
   const [input, setInput] = useState<string>("");
 
