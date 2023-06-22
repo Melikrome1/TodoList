@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 
+
 interface Item {
   id: number;
   text: string;
@@ -23,6 +24,9 @@ export const TodoList: React.FC = () => {
       })
     );
   };
+  const handleRemove = (id: number) => {
+    setTodos(todos.filter((todo) => todo.id !== id));
+  };
 
   const handleClick = () => {
     const newTodo: Item = { id: Date.now(), text: input, completed: false };
@@ -39,18 +43,26 @@ export const TodoList: React.FC = () => {
             key={todo.id}
             onClick={() => handleToggle(todo.id)}
             style={{ textDecoration: todo.completed ? "line-through" : "none" }}
+            className="list-item" 
           >
-            {todo.text}
+             <span className="text">{todo.text}</span> 
+            <button 
+              onClick={() => handleRemove(todo.id)} 
+              className="x-button" 
+            >
+              X
+            </button> 
           </li>
         ))}
       </ul>
       <input
         type="text"
-        placeholder="Add todo item"
+        placeholder="New To-do"
         value={input}
         onChange={(e) => setInput(e.currentTarget.value)}
       />
       <button onClick={handleClick}>Add</button>
+      <div className="quote-text">Stay motivated and conquer your goals!</div>
     </div>
   );
 };
