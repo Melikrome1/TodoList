@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-
+import React, { useState, useEffect } from "react";
 
 interface Item {
   id: number;
@@ -13,6 +12,7 @@ export const TodoList: React.FC = () => {
     { id: 2, text: "Cynthia Loves You", completed: false },
   ]);
   const [input, setInput] = useState<string>("");
+  const [taskChanged, setTaskChanged] = useState<string>("");
 
   const handleToggle = (id: number) => {
     setTodos(
@@ -23,16 +23,32 @@ export const TodoList: React.FC = () => {
         return todo;
       })
     );
+    setTaskChanged("Task Completed, great job!");
   };
+
   const handleRemove = (id: number) => {
     setTodos(todos.filter((todo) => todo.id !== id));
+    setTaskChanged("Task removed");
   };
 
   const handleClick = () => {
     const newTodo: Item = { id: Date.now(), text: input, completed: false };
     setTodos([...todos, newTodo]);
+    setTaskChanged("Task added, don't forget!");
     setInput(""); // Clearing the input after adding a new todo
   };
+
+  useEffect(() => {
+    if (taskChanged) {
+      const timer = setTimeout(() => {
+        setTaskChanged("");
+      }, 3000);
+
+      return () => {
+        clearTimeout(timer);
+      };
+    }
+  }, [taskChanged]);
 
   return (
     <div className="main-container">
@@ -55,6 +71,7 @@ export const TodoList: React.FC = () => {
           </li>
         ))}
       </ul>
+      {taskChanged && <div>{taskChanged}</div>}
       <input
         type="text"
         placeholder="New To-do"
@@ -66,3 +83,4 @@ export const TodoList: React.FC = () => {
     </div>
   );
 };
+
